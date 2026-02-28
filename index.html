@@ -5,40 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>知界搜索</title>
 <style>
-  /* 整体页面居中 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
   body {
-    margin: 0;
-    font-family: sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f5f5f5;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f2f5;
   }
 
-  /* 搜索容器 */
   .search-container {
     display: flex;
     width: 90%;
     max-width: 500px;
-    flex-direction: row;
   }
 
-  /* 输入框 */
   input {
     flex: 1;
-    padding: 14px;
+    padding: 14px 16px;
     font-size: 18px;
     border: 1px solid #ccc;
     border-radius: 8px 0 0 8px;
     outline: none;
   }
 
-  /* 按钮 */
   button {
     padding: 14px 20px;
     font-size: 18px;
-    border: 1px solid #ccc;
+    border: 1px solid #3385ff;
     border-left: none;
     border-radius: 0 8px 8px 0;
     background-color: #3385ff;
@@ -50,26 +46,26 @@
     background-color: #1a73e8;
   }
 
-  /* 手机竖屏适配 */
-  @media (max-width: 600px) {
+  /* 手机屏幕小于 400px 时，自动换行 */
+  @media (max-width: 400px) {
     .search-container {
       flex-direction: column;
-      width: 95%;
     }
     input, button {
       width: 100%;
       border-radius: 8px;
       margin: 5px 0;
-      border-left: 1px solid #ccc;
+      border-left: 1px solid #3385ff;
     }
   }
 </style>
 </head>
 <body>
-  <div class="search-container">
-    <input id="searchInput" placeholder="输入关键词，按回车或点击搜索">
-    <button id="searchBtn">搜索</button>
-  </div>
+
+<div class="search-container">
+  <input id="searchInput" placeholder="请输入关键词" />
+  <button id="searchBtn">搜索</button>
+</div>
 
 <script>
 const input = document.getElementById('searchInput');
@@ -79,28 +75,26 @@ function searchBaidu() {
   const query = input.value.trim();
   if(query) {
     const url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`;
-    // window.open 更兼容微信内置浏览器
     window.open(url, "_blank");
   }
 }
 
 // 回车搜索
-input.addEventListener('keyup', function(e){
-  if(e.key === 'Enter'){
-    searchBaidu();
-  }
+input.addEventListener('keyup', e => {
+  if(e.key === 'Enter') searchBaidu();
 });
 
 // 点击按钮搜索
 btn.addEventListener('click', searchBaidu);
 
 // 支持 ?q=xxx 自动搜索
-const urlParams = new URLSearchParams(window.location.search);
-const q = urlParams.get('q');
-if(q){
+const params = new URLSearchParams(window.location.search);
+const q = params.get('q');
+if(q) {
   const url = `https://www.baidu.com/s?wd=${encodeURIComponent(q)}`;
   window.open(url, "_blank");
 }
 </script>
+
 </body>
 </html>
