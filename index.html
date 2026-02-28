@@ -2,53 +2,64 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>知界搜索</title>
 <style>
+  /* 整体页面居中 */
   body {
     margin: 0;
     font-family: sans-serif;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100vh;
     background-color: #f5f5f5;
   }
+
+  /* 搜索容器 */
   .search-container {
     display: flex;
-    padding: 10px;
-    background-color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    flex-direction: row;
   }
+
+  /* 输入框 */
   input {
     flex: 1;
-    padding: 10px;
-    font-size: 16px;
+    padding: 14px;
+    font-size: 18px;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 8px 0 0 8px;
     outline: none;
   }
+
+  /* 按钮 */
   button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 14px 20px;
+    font-size: 18px;
     border: 1px solid #ccc;
     border-left: none;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 8px 8px 0;
     background-color: #3385ff;
     color: #fff;
     cursor: pointer;
   }
+
   button:hover {
     background-color: #1a73e8;
   }
+
+  /* 手机竖屏适配 */
   @media (max-width: 600px) {
     .search-container {
       flex-direction: column;
+      width: 95%;
     }
     input, button {
-      border-radius: 4px;
-      margin: 2px 0;
       width: 100%;
-    }
-    button {
+      border-radius: 8px;
+      margin: 5px 0;
       border-left: 1px solid #ccc;
     }
   }
@@ -68,7 +79,7 @@ function searchBaidu() {
   const query = input.value.trim();
   if(query) {
     const url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`;
-    // 使用 window.open 更兼容微信内置浏览器
+    // window.open 更兼容微信内置浏览器
     window.open(url, "_blank");
   }
 }
@@ -83,7 +94,7 @@ input.addEventListener('keyup', function(e){
 // 点击按钮搜索
 btn.addEventListener('click', searchBaidu);
 
-// 支持 URL 参数 ?q=xxx 自动搜索
+// 支持 ?q=xxx 自动搜索
 const urlParams = new URLSearchParams(window.location.search);
 const q = urlParams.get('q');
 if(q){
