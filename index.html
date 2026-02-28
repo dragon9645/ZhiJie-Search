@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知界搜索</title>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  .search-container {
+    display: flex;
+    width: 60%;
+    max-width: 500px;
+  }
+  input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background-color: #3385ff;
+    color: #fff;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #1a73e8;
+  }
+  @media (max-width: 600px) {
+    .search-container {
+      width: 90%;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="search-container">
+    <input id="searchInput" placeholder="输入关键词，按回车或点击搜索">
+    <button id="searchBtn">搜索</button>
+  </div>
+
+  <script>
+    const input = document.getElementById('searchInput');
+    const btn = document.getElementById('searchBtn');
+
+    function searchBaidu() {
+      const query = encodeURIComponent(input.value.trim());
+      if(query) {
+        window.location.href = `https://www.baidu.com/s?wd=${query}`;
+      }
+    }
+
+    // 回车搜索
+    input.addEventListener('keyup', function(e){
+      if(e.key === 'Enter'){
+        searchBaidu();
+      }
+    });
+
+    // 点击按钮搜索
+    btn.addEventListener('click', searchBaidu);
+
+    // 如果 URL 带 ?q=xxx 参数，自动搜索
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q');
+    if(q){
+      window.location.href = `https://www.baidu.com/s?wd=${encodeURIComponent(q)}`;
+    }
+  </script>
+</body>
+</html>
