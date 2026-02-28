@@ -9,15 +9,14 @@
     margin: 0;
     font-family: sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     height: 100vh;
     background-color: #f5f5f5;
   }
   .search-container {
     display: flex;
-    width: 60%;
-    max-width: 500px;
+    padding: 10px;
+    background-color: #ffffff;
   }
   input {
     flex: 1;
@@ -42,7 +41,15 @@
   }
   @media (max-width: 600px) {
     .search-container {
-      width: 90%;
+      flex-direction: column;
+    }
+    input, button {
+      border-radius: 4px;
+      margin: 2px 0;
+      width: 100%;
+    }
+    button {
+      border-left: 1px solid #ccc;
     }
   }
 </style>
@@ -53,33 +60,36 @@
     <button id="searchBtn">搜索</button>
   </div>
 
-  <script>
-    const input = document.getElementById('searchInput');
-    const btn = document.getElementById('searchBtn');
+<script>
+const input = document.getElementById('searchInput');
+const btn = document.getElementById('searchBtn');
 
-    function searchBaidu() {
-      const query = encodeURIComponent(input.value.trim());
-      if(query) {
-        window.location.href = `https://www.baidu.com/s?wd=${query}`;
-      }
-    }
+function searchBaidu() {
+  const query = input.value.trim();
+  if(query) {
+    const url = `https://www.baidu.com/s?wd=${encodeURIComponent(query)}`;
+    // 使用 window.open 更兼容微信内置浏览器
+    window.open(url, "_blank");
+  }
+}
 
-    // 回车搜索
-    input.addEventListener('keyup', function(e){
-      if(e.key === 'Enter'){
-        searchBaidu();
-      }
-    });
+// 回车搜索
+input.addEventListener('keyup', function(e){
+  if(e.key === 'Enter'){
+    searchBaidu();
+  }
+});
 
-    // 点击按钮搜索
-    btn.addEventListener('click', searchBaidu);
+// 点击按钮搜索
+btn.addEventListener('click', searchBaidu);
 
-    // 如果 URL 带 ?q=xxx 参数，自动搜索
-    const urlParams = new URLSearchParams(window.location.search);
-    const q = urlParams.get('q');
-    if(q){
-      window.location.href = `https://www.baidu.com/s?wd=${encodeURIComponent(q)}`;
-    }
-  </script>
+// 支持 URL 参数 ?q=xxx 自动搜索
+const urlParams = new URLSearchParams(window.location.search);
+const q = urlParams.get('q');
+if(q){
+  const url = `https://www.baidu.com/s?wd=${encodeURIComponent(q)}`;
+  window.open(url, "_blank");
+}
+</script>
 </body>
 </html>
